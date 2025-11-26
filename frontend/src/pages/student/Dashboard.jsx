@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 import './Dashboard.css';
 
 const StudentDashboard = () => {
@@ -25,7 +26,7 @@ const StudentDashboard = () => {
 
   const fetchSubjects = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/student/subjects');
+      const response = await axios.get(`${config.API_BASE_URL}/api/student/subjects`);
       setSubjects(response.data);
     } catch (error) {
       console.error('Failed to fetch subjects', error);
@@ -34,7 +35,7 @@ const StudentDashboard = () => {
 
   const fetchResults = async (studentId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/student/results/${studentId}`);
+      const response = await axios.get(`${config.API_BASE_URL}/api/student/results/${studentId}`);
       setResults(response.data);
     } catch (error) {
       console.error('Failed to fetch results', error);

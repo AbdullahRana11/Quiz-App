@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 import './Dashboard.css';
 
 const AdminDashboard = () => {
@@ -25,7 +26,7 @@ const AdminDashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/admin/students');
+      const response = await axios.get(`${config.API_BASE_URL}/api/admin/students`);
       setStudents(response.data);
     } catch (error) {
       console.error('Failed to fetch students', error);
@@ -34,7 +35,7 @@ const AdminDashboard = () => {
 
   const fetchInstructors = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/admin/instructors');
+      const response = await axios.get(`${config.API_BASE_URL}/api/admin/instructors`);
       setInstructors(response.data);
     } catch (error) {
       console.error('Failed to fetch instructors', error);
@@ -44,7 +45,7 @@ const AdminDashboard = () => {
   const handleAddStudent = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/admin/student/add', newStudent);
+      await axios.post(`${config.API_BASE_URL}/api/admin/student/add`, newStudent);
       alert('Student added successfully');
       setNewStudent({ id: '', name: '', password: 'Student@123' });
       fetchStudents();
@@ -57,7 +58,7 @@ const AdminDashboard = () => {
   const handleAddInstructor = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/admin/instructor/add', newInstructor);
+      await axios.post(`${config.API_BASE_URL}/api/admin/instructor/add`, newInstructor);
       alert('Instructor added successfully');
       setNewInstructor({ id: '', name: '', password: 'Proff@123', subject_id: '' });
       fetchInstructors();
@@ -70,7 +71,7 @@ const AdminDashboard = () => {
   const handleDeleteStudent = async (id) => {
     if (!window.confirm('Are you sure?')) return;
     try {
-      await axios.delete(`http://localhost:8000/api/admin/student/delete/${id}`);
+      await axios.delete(`${config.API_BASE_URL}/api/admin/student/delete/${id}`);
       fetchStudents();
     } catch (error) {
       console.error('Failed to delete student', error);
@@ -83,7 +84,7 @@ const AdminDashboard = () => {
     if (!newPassword) return;
 
     try {
-      await axios.put(`http://localhost:8000/api/admin/${type}/password`, {
+      await axios.put(`${config.API_BASE_URL}/api/admin/${type}/password`, {
         id: id,
         new_password: newPassword
       });
@@ -97,7 +98,7 @@ const AdminDashboard = () => {
   const handleDeleteInstructor = async (id) => {
     if (!window.confirm('Are you sure?')) return;
     try {
-      await axios.delete(`http://localhost:8000/api/admin/instructor/delete/${id}`);
+      await axios.delete(`${config.API_BASE_URL}/api/admin/instructor/delete/${id}`);
       fetchInstructors();
     } catch (error) {
       console.error('Failed to delete instructor', error);

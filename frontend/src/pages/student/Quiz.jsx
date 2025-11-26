@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 import './Quiz.css';
 
 const StudentQuiz = () => {
@@ -31,7 +32,7 @@ const StudentQuiz = () => {
 
   const fetchQuiz = async (subjectId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/student/quiz/${subjectId}`);
+      const response = await axios.get(`${config.API_BASE_URL}/api/student/quiz/${subjectId}`);
       setQuestions(response.data);
       setLoading(false);
     } catch (error) {
@@ -76,7 +77,7 @@ const StudentQuiz = () => {
         answers: formattedAnswers
       };
 
-      const response = await axios.post('http://localhost:8000/api/student/quiz/submit', payload);
+      const response = await axios.post(`${config.API_BASE_URL}/api/student/quiz/submit`, payload);
       alert(`Quiz Submitted! Your Score: ${response.data.score}/${response.data.total}`);
       navigate('/student/dashboard');
     } catch (error) {

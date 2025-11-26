@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 import './Dashboard.css';
 
 const InstructorDashboard = () => {
@@ -39,7 +40,7 @@ const InstructorDashboard = () => {
 
   const fetchQuestions = async (subjectId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/instructor/questions/${subjectId}`);
+      const response = await axios.get(`${config.API_BASE_URL}/api/instructor/questions/${subjectId}`);
       setQuestions(response.data);
     } catch (error) {
       console.error('Failed to fetch questions', error);
@@ -48,7 +49,7 @@ const InstructorDashboard = () => {
 
   const fetchStudents = async (subjectId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/instructor/students/${subjectId}`);
+      const response = await axios.get(`${config.API_BASE_URL}/api/instructor/students/${subjectId}`);
       setStudents(response.data);
     } catch (error) {
       console.error('Failed to fetch students', error);
@@ -57,7 +58,7 @@ const InstructorDashboard = () => {
 
   const fetchGrades = async (subjectId) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/instructor/grades/${subjectId}`);
+      const response = await axios.get(`${config.API_BASE_URL}/api/instructor/grades/${subjectId}`);
       setGrades(response.data);
     } catch (error) {
       console.error('Failed to fetch grades', error);
@@ -95,14 +96,14 @@ const InstructorDashboard = () => {
     e.preventDefault();
     try {
       if (editingQuestionId) {
-        await axios.put('http://localhost:8000/api/instructor/question/update', {
+        await axios.put(`${config.API_BASE_URL}/api/instructor/question/update`, {
           ...newQuestion,
           id: editingQuestionId,
           subject_id: user.subject_id
         });
         alert('Question updated successfully');
       } else {
-        await axios.post('http://localhost:8000/api/instructor/question/add', {
+        await axios.post(`${config.API_BASE_URL}/api/instructor/question/add`, {
           ...newQuestion,
           subject_id: user.subject_id
         });
@@ -120,7 +121,7 @@ const InstructorDashboard = () => {
   const handleDeleteQuestion = async (questionId) => {
     if (!window.confirm('Are you sure?')) return;
     try {
-      await axios.delete(`http://localhost:8000/api/instructor/question/delete/${user.subject_id}/${questionId}`);
+      await axios.delete(`${config.API_BASE_URL}/api/instructor/question/delete/${user.subject_id}/${questionId}`);
       fetchQuestions(user.subject_id);
     } catch (error) {
       console.error('Failed to delete question', error);
