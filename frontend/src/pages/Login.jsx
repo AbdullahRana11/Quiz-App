@@ -42,6 +42,9 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <h2 className="login-title">Quiz System Login</h2>
+        <p style={{ fontSize: '10px', color: '#666', textAlign: 'center' }}>
+          API: {config.API_BASE_URL}
+        </p>
         
         <div className="role-selector">
           {['student', 'instructor', 'admin'].map((r) => (
