@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
 import './Login.css';
 
 const Login = () => {
@@ -11,12 +12,19 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    // Health check
+    axios.get(`${config.API_BASE_URL}/`)
+      .then(res => console.log("Backend Health Check:", res.data))
+      .catch(err => console.error("Backend Health Check Failed:", err));
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     try {
       const payload = { id: parseInt(id), password, name: role === 'student' ? name : undefined };
-      const response = await axios.post(`http://localhost:8000/api/auth/login/${role}`, payload);
+      const response = await axios.post(`${config.API_BASE_URL}/api/auth/login/${role}`, payload);
       
       localStorage.setItem('user', JSON.stringify(response.data));
       

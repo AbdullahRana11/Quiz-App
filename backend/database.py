@@ -1,11 +1,18 @@
 import mysql.connector
 from mysql.connector import Error
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'United@10691',
-    'database': 'QuizSystem'
+    'host': os.getenv('MYSQLHOST', 'mainline.proxy.rlwy.net'),
+    'user': os.getenv('MYSQLUSER', 'root'),
+    'password': os.getenv('MYSQLPASSWORD', 'hTzsLFtSuAZoGadulHJelZDhMazwqOcA'),
+    'database': os.getenv('MYSQLDATABASE', 'railway'),
+    'port': int(os.getenv('MYSQLPORT', 50602)),
+    'connect_timeout': 60
 }
 
 def get_db_connection():
