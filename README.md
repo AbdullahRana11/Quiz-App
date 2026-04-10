@@ -1,7 +1,8 @@
 # Quiz Application (React + FastAPI + MySQL)
 
 This project is a web-based Quiz Application with a **React** frontend, **FastAPI** backend, and **MySQL** database.
-
+## Team Members
+Muhammad Abdullah Rana and Huzaifa Sohail
 ## Prerequisites
 
 Ensure you have the following installed on your system:
